@@ -33,7 +33,26 @@ $$;
 
 --1.2 Escreva um cursor que exibe todos os nomes dos youtubers em ordem reversa. Para tal: O SELECT deverá ordenar em ordem não reversa; O Cursor deverá ser movido para a última tupla; Os dados deverão ser exibidos de baixo para cima.
 
-
+DO
+$$
+DECLARE
+	curSelect REFCURSOR;
+	tupla RECORD;
+BEGIN
+	OPEN curSelect SCROLL FOR
+	SELECT youtuber FROM tb_top_youtubers;
+	LOOP
+		FETCH curSelect INTO tupla;
+		EXIT WHEN NOT FOUND;
+	END LOOP;
+	LOOP
+		FETCH BACKWARD FROM curSelect INTO tupla;
+		EXIT WHEN NOT FOUND;
+		RAISE NOTICE '%', tupla;
+		END LOOP;
+	CLOSE curSelect;
+END;
+$$
 
 --1.3 Faça uma pesquisa sobre o anti-pattern chamado RBAR - Row By Agonizing Row. Explique com suas palavras do que se trata.
 
