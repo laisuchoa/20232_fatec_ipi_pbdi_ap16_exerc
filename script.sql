@@ -56,3 +56,11 @@ $$
 
 --1.3 Faça uma pesquisa sobre o anti-pattern chamado RBAR - Row By Agonizing Row. Explique com suas palavras do que se trata.
 
+Basicamente, o termo se refere a uma forma de fazer operações em bancos de dados onde há iteração linha por linha da tabela ao invés de uma operação baseada de conjuntos. Por exemplo, suponha que você tenha uma tabela 'Pedidos' com as colunas id_pedido e id_cliente, e queira calcular o número total de pedidos de cada cliente. Uma abordagem RBAR poderia ser algo do tipo:
+
+1. Criar um loop que itera por cada cliente
+2. Dentro do loop, é feita uma contagem de quantos pedidos tal cliente teve e é feita uma impressão do valor
+
+Embora em pequenos banco de dados isso possa não gerar tantos problemas perceptíveis, este método pode levar a uma grande lentidão nas consultas à medida que o volume de dados vai crescendo, representando, assim, uma forma ineficiente de programar.
+
+Um jeito mais otimizado de resolver o problema acima seria com uma consulta que faz um GROUPBY (operação de conjunto) pelo id_cliente e retorna uma contagem de número de pedidos.
